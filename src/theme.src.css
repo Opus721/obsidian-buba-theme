@@ -1,0 +1,697 @@
+/* Buba — a calm dark theme for Obsidian and the Buba plugin, inspired by Linear.
+   A dark window frame holds a slightly lighter rounded panel; text is grey by default and turns white under the
+   pointer and on the open item. Font: Inter, embedded below (no network). The light mode is left as Obsidian's. */
+
+@@FONTS@@
+
+/* ---------- Palette and font ---------- */
+
+body {
+  --font-interface-theme: 'Buba Inter', 'Inter Variable', 'Inter', sans-serif;
+  --font-text-theme: 'Buba Inter', 'Inter Variable', 'Inter', sans-serif;
+  --font-monospace-theme: 'JetBrains Mono', 'Cascadia Code', 'SF Mono', Consolas, monospace;
+  --font-ui-smaller: 12px;
+  --font-ui-small: 13px;
+  --font-ui-medium: 14px;
+  --font-ui-large: 18px;
+  --font-text-size: 15px;
+  --line-height-normal: 1.6;
+  --font-medium: 500;
+  --font-semibold: 600;
+  --bold-modifier: 200;
+  --radius-s: 4px;
+  --radius-m: 6px;
+  --radius-l: 10px;
+  --radius-xl: 12px;
+  --header-height: 40px;
+}
+
+.theme-dark {
+  /* Window frame: sidebars, tab bar */
+  --lin-frame: #09090a;
+  /* Content panel */
+  --lin-panel: #121213;
+  /* Raised rows on the panel: group headers, search fields */
+  --lin-raised: #161617;
+  /* Cards and settings groups */
+  --lin-card: #1a1a1b;
+  /* Open tab */
+  --lin-tab: #1e1f22;
+  /* Buttons and the selected item */
+  --lin-control: #232325;
+  /* Hairlines inside the panel and the panel edge */
+  --lin-line: #1c1d1f;
+  /* Borders of pills, tags, inputs */
+  --lin-edge: #28292c;
+  --lin-edge-strong: #34353a;
+  /* Text: white for headings and hovered items; normal; grey for labels and sidebar items; quiet */
+  --lin-white: #ffffff;
+  --lin-text: #e3e4e6;
+  --lin-grey: #939496;
+  --lin-quiet: #636468;
+
+  --color-base-00: var(--lin-panel);
+  --color-base-05: #0e0e0f;
+  --color-base-10: var(--lin-raised);
+  --color-base-20: var(--lin-frame);
+  --color-base-25: var(--lin-card);
+  --color-base-30: var(--lin-edge);
+  --color-base-35: var(--lin-edge-strong);
+  --color-base-40: #46474c;
+  --color-base-50: var(--lin-quiet);
+  --color-base-60: #7c7d81;
+  --color-base-70: var(--lin-grey);
+  --color-base-100: var(--lin-text);
+
+  /* Accent: indigo */
+  --accent-h: 234;
+  --accent-s: 56%;
+  --accent-l: 60%;
+  --text-accent: #a9b4ff;
+  --text-accent-hover: #c3cbff;
+  --link-color: var(--text-accent);
+  --link-color-hover: var(--text-accent-hover);
+  --link-external-color: var(--text-accent);
+  --link-unresolved-color: var(--lin-grey);
+  --link-decoration-thickness: 1px;
+
+  --background-primary: var(--lin-panel);
+  --background-primary-alt: var(--lin-raised);
+  --background-secondary: var(--lin-frame);
+  --background-secondary-alt: var(--lin-frame);
+  --background-modifier-border: var(--lin-line);
+  --background-modifier-border-hover: var(--lin-edge);
+  --background-modifier-border-focus: #3d3e44;
+  --background-modifier-hover: rgba(255, 255, 255, 0.045);
+  --background-modifier-active-hover: rgba(255, 255, 255, 0.07);
+  --background-modifier-form-field: var(--lin-raised);
+  --background-modifier-form-field-hover: var(--lin-raised);
+  --interactive-normal: var(--lin-control);
+  --interactive-hover: #2a2b2e;
+
+  --text-normal: var(--lin-text);
+  --text-muted: var(--lin-grey);
+  --text-faint: var(--lin-quiet);
+  --text-on-accent: #ffffff;
+  --bold-color: var(--lin-white);
+  --italic-color: var(--lin-text);
+  --h1-color: var(--lin-white);
+  --h2-color: var(--lin-white);
+  --h3-color: var(--lin-white);
+  --h4-color: var(--lin-white);
+  --h5-color: var(--lin-text);
+  --h6-color: var(--lin-grey);
+  --inline-title-color: var(--lin-white);
+
+  --icon-color: var(--lin-grey);
+  --icon-color-hover: var(--lin-white);
+  --icon-color-active: var(--lin-white);
+  --icon-color-focused: var(--lin-white);
+  --icon-opacity: 1;
+  --icon-opacity-hover: 1;
+
+  --titlebar-background: var(--lin-frame);
+  --titlebar-background-focused: var(--lin-frame);
+  --titlebar-border-width: 0;
+  --ribbon-background: var(--lin-frame);
+  --ribbon-background-collapsed: var(--lin-frame);
+  --divider-color: transparent;
+  --divider-color-hover: var(--lin-edge-strong);
+  --status-bar-background: var(--lin-frame);
+  --status-bar-border-width: 0;
+  --status-bar-text-color: var(--lin-quiet);
+
+  --scrollbar-thumb-bg: rgba(255, 255, 255, 0.08);
+  --scrollbar-active-thumb-bg: rgba(255, 255, 255, 0.16);
+
+  /* Sidebar items: grey; hovered and open ones white on a rounded grey background */
+  --nav-item-size: 13px;
+  --nav-item-weight: 500;
+  --nav-item-weight-hover: 500;
+  --nav-item-weight-active: 500;
+  --nav-item-color: var(--lin-grey);
+  --nav-item-color-hover: var(--lin-white);
+  --nav-item-color-active: var(--lin-white);
+  --nav-item-color-selected: var(--lin-white);
+  --nav-item-background-hover: rgba(255, 255, 255, 0.04);
+  --nav-item-background-active: var(--lin-control);
+  --nav-item-background-selected: var(--lin-control);
+  --nav-item-radius: 6px;
+  --nav-heading-color: var(--lin-grey);
+  --nav-heading-color-hover: var(--lin-white);
+  --nav-collapse-icon-color: var(--lin-quiet);
+  --nav-collapse-icon-color-collapsed: var(--lin-quiet);
+  --nav-indentation-guide-color: transparent;
+
+  /* Tabs: grey labels; the open tab is a #1e1f22 pill with white text */
+  --tab-container-background: var(--lin-frame);
+  --sidebar-tab-container-background: var(--lin-frame);
+  --tab-background-active: var(--lin-tab);
+  --tab-text-color: var(--lin-grey);
+  --tab-text-color-focused: var(--lin-grey);
+  --tab-text-color-active: var(--lin-text);
+  --tab-text-color-focused-active: var(--lin-text);
+  --tab-text-color-focused-active-current: var(--lin-white);
+  --tab-font-size: 12px;
+  --tab-font-weight: 500;
+  --tab-radius: 6px;
+  --tab-radius-active: 6px;
+  --tab-curve: 0px;
+  --tab-outline-width: 0px;
+  --tab-outline-color: transparent;
+  --tab-divider-color: transparent;
+  --tab-inner-background-hover: rgba(255, 255, 255, 0.04);
+
+  /* Tags: round pills with a thin border */
+  --tag-background: transparent;
+  --tag-background-hover: rgba(255, 255, 255, 0.04);
+  --tag-border-width: 1px;
+  --tag-border-color: var(--lin-edge);
+  --tag-border-color-hover: var(--lin-edge-strong);
+  --tag-color: #d8d9db;
+  --tag-color-hover: var(--lin-white);
+  --tag-radius: 999px;
+  --tag-size: 12px;
+  --tag-weight: 500;
+  --tag-padding-x: 9px;
+  --tag-padding-y: 2px;
+
+  --code-background: #242425;
+  --code-normal: var(--lin-text);
+  --code-border-color: var(--lin-edge);
+  --code-border-width: 1px;
+  --code-radius: 4px;
+  --code-size: 0.87em;
+
+  --blockquote-border-color: var(--lin-edge-strong);
+  --blockquote-color: var(--lin-grey);
+  --hr-color: var(--lin-line);
+  --table-border-color: var(--lin-line);
+  --table-header-color: var(--lin-grey);
+  --checkbox-border-color: var(--lin-quiet);
+  --checkbox-radius: 4px;
+
+  /* Menus, suggestions, modals */
+  /* Menu: background #212122, border #323336, separator #292a2d */
+  --lin-menu: #212122;
+  --lin-menu-hover: #2c2d30;
+  --menu-background: var(--lin-menu);
+  --menu-border-color: #323336;
+  --menu-divider-color: #292a2d;
+  --menu-radius: 8px;
+  --menu-padding: 4px;
+  --menu-shadow: 0 8px 24px rgba(0, 0, 0, 0.5), 0 2px 6px rgba(0, 0, 0, 0.4);
+  --menu-backdrop-filter: none;
+  --prompt-background: var(--lin-menu);
+  --prompt-border-color: #323336;
+  --prompt-backdrop-filter: none;
+  --modal-background: var(--lin-panel);
+  --modal-border-color: var(--lin-edge);
+  --modal-radius: 12px;
+  --shadow-s: 0 4px 16px rgba(0, 0, 0, 0.45);
+  --shadow-l: 0 16px 48px rgba(0, 0, 0, 0.6);
+
+  /* Inputs and buttons */
+  --input-height: 30px;
+  --input-radius: 6px;
+  --input-font-weight: 500;
+  --input-shadow: inset 0 0 0 1px var(--lin-edge);
+  --input-shadow-hover: inset 0 0 0 1px var(--lin-edge-strong);
+  --button-radius: 6px;
+  --clickable-icon-radius: 6px;
+  --dropdown-background: var(--lin-control);
+  --dropdown-background-hover: #2a2b2e;
+  --toggle-thumb-color: #ffffff;
+  --slider-track-background: var(--lin-edge);
+}
+
+/* ---------- Window: dark frame and a rounded panel ---------- */
+
+.theme-dark .workspace,
+.theme-dark .workspace-ribbon,
+.theme-dark .workspace-split.mod-left-split,
+.theme-dark .workspace-split.mod-right-split,
+.theme-dark .workspace-split.mod-root {
+  background-color: var(--lin-frame);
+}
+
+.theme-dark .workspace-ribbon.mod-left {
+  border-inline-end: none;
+}
+
+.theme-dark .workspace-split.mod-left-split .workspace-tab-container,
+.theme-dark .workspace-split.mod-right-split .workspace-tab-container,
+.theme-dark .workspace-split.mod-left-split .workspace-leaf-content,
+.theme-dark .workspace-split.mod-right-split .workspace-leaf-content,
+.theme-dark .workspace-split.mod-left-split .view-content,
+.theme-dark .workspace-split.mod-right-split .view-content {
+  background-color: var(--lin-frame);
+}
+
+/* Each tab group in the middle is its own panel: lighter than the frame, a hairline edge, 8 px corners and an
+   8 px gap on the right and bottom. */
+.theme-dark .workspace-split.mod-root .workspace-tabs {
+  background-color: var(--lin-frame);
+  padding: 0 8px 8px 0;
+}
+
+.theme-dark .workspace-split.mod-root .workspace-tabs .workspace-tab-container {
+  background-color: var(--lin-panel);
+  border: 1px solid var(--lin-line);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.theme-dark .workspace-split.mod-root .workspace-leaf-resize-handle {
+  border-color: transparent;
+}
+
+.theme-dark .workspace-split.mod-root .view-header {
+  border-bottom: 1px solid var(--lin-line);
+  background-color: var(--lin-panel);
+}
+
+.theme-dark .view-header-title,
+.theme-dark .view-header-breadcrumb {
+  color: var(--lin-text);
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.theme-dark .view-header-breadcrumb-separator {
+  color: var(--lin-quiet);
+}
+
+/* ---------- Tabs ---------- */
+
+.theme-dark .workspace-tab-header-container {
+  border-bottom: none;
+}
+
+.theme-dark .mod-root .workspace-tab-header {
+  margin-top: 6px;
+  margin-bottom: 6px;
+  padding: 0 1px;
+}
+
+.theme-dark .mod-root .workspace-tab-header-inner {
+  padding: 0 10px;
+  border-radius: 6px;
+}
+
+.theme-dark .mod-root .workspace-tab-header.is-active {
+  border-radius: 6px;
+  box-shadow: none;
+}
+
+.theme-dark .mod-root .workspace-tab-header.is-active .workspace-tab-header-inner-title {
+  font-weight: 600;
+}
+
+.theme-dark .mod-root .workspace-tab-header::before,
+.theme-dark .mod-root .workspace-tab-header::after,
+.theme-dark .mod-root .workspace-tab-header-inner::after {
+  display: none;
+}
+
+.theme-dark .workspace-tab-header:hover .workspace-tab-header-inner-title {
+  color: var(--lin-white);
+}
+
+/* ---------- Sidebar: grey items, white under the pointer ---------- */
+
+.theme-dark .tree-item-self,
+.theme-dark .nav-file-title,
+.theme-dark .nav-folder-title {
+  border-radius: 6px;
+  letter-spacing: -0.005em;
+}
+
+.theme-dark .tree-item-self .tree-item-icon,
+.theme-dark .tree-item-self .tree-item-flair {
+  color: var(--lin-quiet);
+}
+
+.theme-dark .tree-item-self:hover .tree-item-icon,
+.theme-dark .tree-item-self.is-active .tree-item-icon,
+.theme-dark .tree-item-self.is-selected .tree-item-icon {
+  color: var(--lin-grey);
+}
+
+.theme-dark .tree-item-flair-outer .tree-item-flair,
+.theme-dark .nav-file-tag {
+  color: var(--lin-quiet);
+  background: transparent;
+  font-weight: 500;
+}
+
+.theme-dark .nav-header .nav-buttons-container .clickable-icon,
+.theme-dark .workspace-sidedock-vault-profile {
+  color: var(--lin-grey);
+}
+
+.theme-dark .workspace-sidedock-vault-profile .workspace-drawer-vault-name {
+  color: var(--lin-text);
+  font-weight: 600;
+}
+
+/* ---------- Note text ---------- */
+
+.theme-dark .markdown-rendered,
+.theme-dark .markdown-source-view {
+  letter-spacing: -0.006em;
+}
+
+.theme-dark .inline-title {
+  font-size: 24px;
+  font-weight: 600;
+  letter-spacing: -0.018em;
+  line-height: 1.3;
+}
+
+.theme-dark .markdown-rendered h1,
+.theme-dark .HyperMD-header-1 {
+  font-size: 22px;
+  font-weight: 600;
+  letter-spacing: -0.016em;
+}
+
+.theme-dark .markdown-rendered h2,
+.theme-dark .HyperMD-header-2 {
+  font-size: 18px;
+  font-weight: 600;
+  letter-spacing: -0.012em;
+}
+
+.theme-dark .markdown-rendered h3,
+.theme-dark .HyperMD-header-3 {
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.theme-dark .markdown-rendered code,
+.theme-dark .cm-s-obsidian span.cm-inline-code {
+  padding: 1px 4px;
+}
+
+.theme-dark .metadata-container {
+  --metadata-label-text-color: var(--lin-grey);
+  --metadata-input-text-color: var(--lin-text);
+}
+
+/* ---------- Menus and the command palette ---------- */
+
+.theme-dark .menu {
+  border: 1px solid #323336;
+}
+
+.theme-dark .menu-item {
+  border-radius: 5px;
+  font-size: 13px;
+  font-weight: 500;
+  color: #e5e6e8;
+  min-height: 31px;
+}
+
+.theme-dark .menu-item .menu-item-icon {
+  color: var(--lin-grey);
+}
+
+.theme-dark .menu-item:not(.is-disabled, .is-label).selected,
+.theme-dark .menu-item:not(.is-disabled, .is-label):hover {
+  background-color: var(--lin-menu-hover);
+  color: var(--lin-white);
+}
+
+.theme-dark .menu-item:not(.is-disabled, .is-label):hover .menu-item-icon {
+  color: var(--lin-white);
+}
+
+.theme-dark .menu-separator {
+  border-color: #292a2d;
+}
+
+.theme-dark .prompt {
+  border: 1px solid #323336;
+  border-radius: 12px;
+}
+
+.theme-dark .prompt-input-container input.prompt-input {
+  font-size: 15px;
+  background: transparent;
+  box-shadow: none;
+}
+
+.theme-dark .suggestion-item {
+  border-radius: 6px;
+  font-size: 13px;
+  color: var(--lin-text);
+}
+
+.theme-dark .suggestion-item.is-selected {
+  background-color: var(--lin-menu-hover);
+  color: var(--lin-white);
+}
+
+.theme-dark .suggestion-hotkey,
+.theme-dark kbd {
+  background-color: var(--lin-control);
+  border: 1px solid var(--lin-edge);
+  border-radius: 4px;
+  color: var(--lin-grey);
+  box-shadow: none;
+}
+
+/* ---------- Buttons and inputs ---------- */
+
+/* Buttons take Obsidian's own rule through the variables above (--interactive-normal, --interactive-hover,
+   --input-shadow, --button-radius), so a plugin's own button shape (round arrows, glass buttons) still wins. */
+
+.theme-dark button.mod-cta {
+  background-color: #5e6ad2;
+  color: #ffffff;
+  box-shadow: none;
+}
+
+.theme-dark button.mod-cta:hover {
+  background-color: #6c78e0;
+}
+
+.theme-dark :where(input[type='text'], input[type='search'], input[type='number'], textarea) {
+  font-size: 13px;
+}
+
+/* ---------- Settings: the tab column is frame, groups are cards ---------- */
+
+.theme-dark .vertical-tab-header {
+  background-color: var(--lin-frame);
+}
+
+.theme-dark .vertical-tab-header-group-title {
+  color: var(--lin-quiet);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+.theme-dark .vertical-tab-nav-item {
+  color: var(--lin-grey);
+  font-size: 13px;
+  font-weight: 500;
+  border-radius: 6px;
+}
+
+.theme-dark .vertical-tab-nav-item:hover,
+.theme-dark .vertical-tab-nav-item.is-active {
+  color: var(--lin-white);
+}
+
+.theme-dark .vertical-tab-nav-item.is-active {
+  background-color: var(--lin-control);
+}
+
+.theme-dark .vertical-tab-content-container,
+.theme-dark .vertical-tab-content {
+  background-color: var(--lin-panel);
+}
+
+.theme-dark .setting-item-name {
+  color: var(--lin-text);
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.theme-dark .setting-item-description {
+  color: var(--lin-grey);
+  font-size: 13px;
+}
+
+.theme-dark .setting-item-heading .setting-item-name {
+  color: var(--lin-white);
+  font-size: 15px;
+  font-weight: 600;
+}
+
+/* ---------- Buba ---------- */
+
+/* A grid tile is a card: a shade lighter than the panel, 8 px corners, a faint edge; color only on the small
+   icon, all labels grey; under the pointer the card lightens and the name turns white, like sidebar items. */
+.theme-dark {
+  /* Smaller icon on files without a preview: 14 % of the tile side instead of 20 % (a Style Settings value wins). */
+  --buba-style-plate-icon: 14;
+}
+
+.theme-dark .buba-tile-thumb {
+  background-color: var(--lin-card);
+  border-radius: 8px;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.035);
+  transition: background-color 0.12s ease, box-shadow 0.12s ease;
+}
+
+.theme-dark .buba-tile:hover .buba-tile-thumb {
+  background-color: #1e1e20;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.07);
+}
+
+/* Format label under the icon: grey and medium weight, not colored and bold. */
+.theme-dark .buba-tile-thumb.mod-format .buba-tile-plate:not(:empty) {
+  color: var(--lin-grey);
+  font-weight: 500;
+  letter-spacing: 0.04em;
+}
+
+/* File name under the card: grey, left-aligned; white under the pointer and when selected. */
+.theme-dark .buba-tile-name {
+  color: var(--lin-grey);
+  font-weight: 500;
+  text-align: start;
+  padding-inline: 2px;
+  transition: color 0.12s ease;
+}
+
+.theme-dark .buba-tile:hover .buba-tile-name,
+.theme-dark .buba-tile.is-selected .buba-tile-name {
+  color: var(--lin-white);
+}
+
+/* Selected card: a thin indigo ring and a light tint. */
+.theme-dark .buba-tile.is-selected .buba-tile-thumb {
+  background-color: #1c1d26;
+  box-shadow: 0 0 0 1.5px #5e6ad2;
+}
+
+/* First lines of a note on its card: quiet grey. */
+.theme-dark .buba-tile.has-text .buba-tile-text {
+  color: var(--lin-quiet);
+}
+
+/* Corner badges: a dark translucent pill with a hairline (drawn as a shadow, so the width stays), grey text. */
+.theme-dark .buba-tile-badge,
+.theme-dark .buba-tile.has-comment:not(.has-open-comment) .buba-tile-comment {
+  background-color: rgba(9, 9, 10, 0.72);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.08);
+  color: var(--lin-grey);
+  font-weight: 500;
+}
+
+/* Toolbar above the grid. */
+.theme-dark .buba-grid-toolbar {
+  background-color: var(--lin-panel);
+}
+
+.theme-dark .buba-grid-path {
+  font-size: 13px;
+  font-weight: 500;
+}
+
+/* File panel on the right: section labels grey. */
+.theme-dark .buba-inspector-label,
+.theme-dark .buba-storage-heading,
+.theme-dark .buba-comments-title {
+  color: var(--lin-grey);
+  font-size: 13px;
+  font-weight: 500;
+}
+
+/* ---------- The right sidebar is a panel too ---------- */
+
+.theme-dark .workspace-split.mod-right-split .workspace-tabs {
+  padding: 0 8px 8px 0;
+}
+
+.theme-dark .workspace-split.mod-right-split .workspace-tabs .workspace-tab-container,
+.theme-dark .workspace-split.mod-right-split .workspace-leaf-content,
+.theme-dark .workspace-split.mod-right-split .view-content {
+  background-color: var(--lin-panel);
+}
+
+.theme-dark .workspace-split.mod-right-split .workspace-tabs .workspace-tab-container {
+  border: 1px solid var(--lin-line);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+/* ---------- Phone and tablet: full-screen panels without frame or gaps ---------- */
+
+.theme-dark.is-mobile .workspace-split.mod-root .workspace-tabs,
+.theme-dark.is-mobile .workspace-split.mod-right-split .workspace-tabs {
+  padding: 0;
+}
+
+.theme-dark.is-mobile .workspace-split.mod-root .workspace-tabs .workspace-tab-container,
+.theme-dark.is-mobile .workspace-split.mod-right-split .workspace-tabs .workspace-tab-container {
+  border: none;
+  border-radius: 0;
+}
+
+.theme-dark .modal-bg {
+  background-color: rgba(0, 0, 0, 0.55);
+}
+
+/* ---------- Kiki (similar pictures window) ---------- */
+
+/* Header: the arrows' round frame and the mode switch are the same dark pills with a hairline, like Linear's
+   filter tabs. Arrows keep Kiki's own colors (white when live, faint when disabled); Kiki keeps its own shapes. */
+.theme-dark .kiki-pager,
+.theme-dark .kiki-modes {
+  background-color: var(--lin-tab);
+  border: none;
+  box-shadow: inset 0 0 0 1px var(--lin-edge);
+}
+
+/* Color only: Kiki sizes the label (smaller on the phone) and truncates it with an ellipsis. */
+.theme-dark .kiki-count-text {
+  color: var(--lin-text);
+}
+
+.theme-dark .kiki-dots span:not(.is-current) {
+  background-color: var(--lin-edge-strong);
+}
+
+.theme-dark .kiki-modal .kiki-mode:not(.is-active) {
+  color: var(--lin-grey);
+}
+
+/* Hover only where there is a pointer, like Kiki's own rule, so the white doesn't stick after a tap on the phone. */
+@media (hover: hover) {
+  .theme-dark .kiki-modal .kiki-mode:hover:not(.is-active) {
+    color: var(--lin-white);
+  }
+}
+
+.theme-dark .kiki-modal .kiki-home:not(.is-current) {
+  border-color: var(--lin-edge);
+}
+
+/* Pictures: 8 px corners like Buba's cards, the hairline from the panel. */
+.theme-dark .kiki-main,
+.theme-dark .kiki-tile,
+.theme-dark .kiki-placeholder {
+  border-radius: 8px;
+  background-color: var(--lin-card);
+}
+
+.theme-dark .kiki-status {
+  color: var(--lin-grey);
+}
