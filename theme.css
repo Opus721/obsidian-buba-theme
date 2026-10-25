@@ -270,6 +270,11 @@ body {
   background-color: var(--lin-panel);
 }
 
+/* Phone and tablet: no line under Obsidian's top bar, as in stock Obsidian. */
+.theme-dark.is-mobile .workspace-split.mod-root .view-header {
+  border-bottom-color: transparent;
+}
+
 .theme-dark .view-header-title,
 .theme-dark .view-header-breadcrumb {
   color: var(--lin-text);
@@ -398,10 +403,67 @@ body {
   --metadata-input-text-color: var(--lin-text);
 }
 
+/* Properties: a small grey heading, like Linear's section labels. */
+.theme-dark .metadata-properties-heading,
+.theme-dark .metadata-properties-title {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--lin-grey);
+}
+
+/* Callouts: a quiet card with a hairline; only the icon and title keep the callout's color. */
+.theme-dark .callout {
+  background-color: var(--lin-card);
+  border: 1px solid var(--lin-edge);
+  border-radius: 8px;
+  mix-blend-mode: normal;
+}
+
+.theme-dark .callout-title {
+  font-size: 14px;
+  font-weight: 500;
+}
+
+/* Tables: rows separated by hairlines, no column lines; grey medium-weight header. */
+.theme-dark .markdown-rendered th,
+.theme-dark .markdown-rendered td,
+.theme-dark .cm-html-embed th,
+.theme-dark .cm-html-embed td {
+  border-inline: none;
+  border-color: var(--lin-edge);
+}
+
+.theme-dark .markdown-rendered th,
+.theme-dark .cm-html-embed th {
+  font-size: 13px;
+  font-weight: 500;
+}
+
 /* ---------- Menus and the command palette ---------- */
 
 .theme-dark .menu {
   border: 1px solid #323336;
+}
+
+/* Phone and tablet: menus, the command palette, suggestions and the bottom bar are matte glass, as in Obsidian
+   but with a much stronger blur, so busy content behind them turns into soft colour and nothing is readable
+   through them. Menu items sit on grey cards, one card per group, over the darker sheet. */
+body.theme-dark.is-mobile {
+  --blur-opacity-s: 80%;
+  --blur-opacity-m: 82%;
+  --raised-blur: blur(24px) saturate(1.2);
+  --menu-backdrop-filter: blur(32px) saturate(1.2);
+  --prompt-backdrop-filter: blur(32px) saturate(1.2);
+  --suggestion-backdrop-filter: blur(32px) saturate(1.2);
+}
+body.theme-dark.is-mobile .menu {
+  --menu-background: var(--lin-frame);
+}
+body.theme-dark.is-phone .menu-item {
+  border-radius: 0;
+}
+body.theme-dark.is-phone .menu-item:not(.is-label) {
+  background-color: var(--lin-control);
 }
 
 .theme-dark .menu-item {
@@ -412,17 +474,18 @@ body {
   min-height: 31px;
 }
 
-.theme-dark .menu-item .menu-item-icon {
+/* Warning items (Delete) keep Obsidian's red text, icon and hover. */
+.theme-dark .menu-item:not(.is-warning) .menu-item-icon {
   color: var(--lin-grey);
 }
 
-.theme-dark .menu-item:not(.is-disabled, .is-label).selected,
-.theme-dark .menu-item:not(.is-disabled, .is-label):hover {
+.theme-dark .menu-item:not(.is-disabled, .is-label, .is-warning).selected,
+.theme-dark .menu-item:not(.is-disabled, .is-label, .is-warning):hover {
   background-color: var(--lin-menu-hover);
   color: var(--lin-white);
 }
 
-.theme-dark .menu-item:not(.is-disabled, .is-label):hover .menu-item-icon {
+.theme-dark .menu-item:not(.is-disabled, .is-label, .is-warning):hover .menu-item-icon {
   color: var(--lin-white);
 }
 
@@ -646,6 +709,401 @@ body {
 
 .theme-dark .modal-bg {
   background-color: rgba(0, 0, 0, 0.55);
+}
+
+/* ---------- Canvas ---------- */
+
+/* Board: the panel color with faint dots; plain cards and arrows in quiet greys. */
+body.theme-dark {
+  --canvas-background: var(--lin-panel);
+  --canvas-dot-pattern: #2a2b2f;
+  --canvas-color: #5a5b61;
+  --canvas-card-label-color: var(--lin-quiet);
+  --canvas-controls-radius: 8px;
+}
+
+/* Cards are Linear cards: a shade lighter than the board, a faint edge, 8 px corners. */
+.theme-dark .canvas-node-container {
+  background-color: var(--lin-card);
+  border-radius: 8px;
+  box-shadow: none;
+}
+
+.theme-dark .canvas-node:not(.is-themed):not(.is-selected):not(.is-focused) .canvas-node-container {
+  border-color: var(--lin-edge-strong);
+}
+
+.theme-dark .canvas-node-group .canvas-node-container {
+  background-color: transparent;
+}
+
+/* Group title: a small grey label instead of a big tinted chip; colored groups keep their tint. */
+.theme-dark .canvas-group-label {
+  font-size: 1.15em;
+  font-weight: 500;
+  color: var(--lin-grey);
+  border-radius: 6px;
+}
+
+.theme-dark .canvas-node-group:not(.is-themed) .canvas-group-label:not([contenteditable='true']) {
+  background-color: var(--lin-tab);
+}
+
+/* Floating controls on the right, the card bar at the bottom and the selection toolbar (with Advanced Canvas's
+   shape and border rows under it): dark rounded pills with a
+   hairline, grey icons that turn white under the pointer, like Linear's floating toolbars. */
+.theme-dark .canvas-control-group,
+.theme-dark .canvas-card-menu,
+.theme-dark .canvas-menu,
+.theme-dark .canvas-menu .canvas-submenu {
+  background-color: var(--lin-menu);
+  border: 1px solid #323336;
+  border-radius: 8px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.35);
+}
+
+.theme-dark .canvas-control-group {
+  padding: 2px;
+  gap: 1px;
+}
+
+.theme-dark .canvas-control-item {
+  background-color: transparent;
+  border-bottom: none;
+  border-radius: 6px;
+  color: var(--lin-grey);
+}
+
+.theme-dark .canvas-card-menu {
+  padding: 2px;
+  gap: 1px;
+}
+
+.theme-dark .canvas-card-menu .canvas-card-menu-button {
+  border-radius: 6px;
+  color: var(--lin-grey);
+}
+
+.theme-dark .canvas-card-menu .canvas-card-menu-button svg {
+  fill: var(--lin-menu);
+}
+
+.theme-dark .canvas-menu .clickable-icon {
+  color: var(--lin-grey);
+  border-radius: 6px;
+}
+
+@media (hover: hover) {
+  .theme-dark .canvas-control-item:hover,
+  .theme-dark .canvas-card-menu .canvas-card-menu-button:hover,
+  .theme-dark .canvas-menu .clickable-icon:hover {
+    color: var(--lin-white);
+    background-color: var(--lin-menu-hover);
+  }
+
+  .theme-dark .canvas-card-menu .canvas-card-menu-button:hover svg {
+    fill: var(--lin-menu-hover);
+  }
+}
+
+.theme-dark .canvas-control-item.is-active,
+.theme-dark .canvas-menu .clickable-icon.is-active {
+  color: #a9b4ff;
+}
+
+.theme-dark .canvas-control-item.is-disabled svg {
+  color: var(--lin-quiet);
+}
+
+/* Phone: the same pills, no hover. */
+.theme-dark.is-mobile .canvas-control-group {
+  border: 1px solid #323336;
+}
+
+/* ---------- Graph ---------- */
+
+/* Grey dots and hairline links; the open note and hovered dots take the indigo accent. */
+body.theme-dark {
+  --graph-node: #8a8b90;
+  --graph-node-unresolved: var(--lin-quiet);
+  --graph-node-focused: #7c86e6;
+  --graph-node-tag: #6fae8f;
+  --graph-node-attachment: #c7a35a;
+  --graph-line: #303136;
+  --graph-text: var(--lin-grey);
+}
+
+/* Settings panel: the same floating menu as the rest of the theme. */
+.theme-dark .graph-controls {
+  border: 1px solid #323336;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.35);
+}
+
+.theme-dark .graph-controls.is-close {
+  background-color: var(--lin-menu);
+  border-color: #323336;
+}
+
+.theme-dark .graph-control-section-header {
+  color: var(--lin-grey);
+}
+
+@media (hover: hover) {
+  .theme-dark .graph-control-section:hover .graph-control-section-header {
+    color: var(--lin-white);
+  }
+}
+
+/* ---------- Bases (tables, cards, board) ---------- */
+
+/* Rows split by hairlines without column lines; cards and board cards are Linear cards. */
+body.theme-dark {
+  --bases-table-column-border-width: 0;
+  --bases-table-border-color: var(--lin-edge);
+  --bases-cards-background: var(--lin-card);
+  --bases-cards-cover-background: var(--lin-raised);
+  --bases-cards-radius: 8px;
+  --bases-cards-shadow: 0 0 0 1px var(--lin-edge);
+  --bases-cards-shadow-hover: 0 0 0 1px var(--lin-edge-strong);
+  --bases-kanban-column-background: var(--lin-raised);
+  --bases-kanban-column-radius: 10px;
+  --bases-kanban-card-background: var(--lin-card);
+  --bases-kanban-card-radius: 8px;
+  --bases-kanban-card-shadow: 0 0 0 1px var(--lin-edge);
+  --bases-kanban-card-shadow-hover: 0 0 0 1px var(--lin-edge-strong);
+  --bases-kanban-cover-background: var(--lin-raised);
+}
+
+/* File names in a table read as plain white text, underlined only under the pointer. */
+.theme-dark .bases-table-cell .internal-link {
+  color: var(--lin-text);
+  text-decoration: none;
+}
+
+@media (hover: hover) {
+  .theme-dark .bases-table-cell .internal-link:hover {
+    color: var(--lin-white);
+    text-decoration: underline;
+  }
+}
+
+/* Toolbar above a base: grey labels that turn white under the pointer. */
+.theme-dark .bases-toolbar-item {
+  color: var(--lin-grey);
+}
+
+@media (hover: hover) {
+  .theme-dark .bases-toolbar-item:hover {
+    color: var(--lin-white);
+  }
+}
+
+/* ---------- Search, backlinks, bookmarks ---------- */
+
+/* Matches are marked with an indigo tint instead of yellow; match cards are quiet cards with a hairline. */
+.theme-dark .search-result-file-matched-text {
+  background-color: rgba(94, 106, 210, 0.32);
+  color: var(--lin-white);
+  border-radius: 2px;
+}
+
+.theme-dark .search-result-file-matches {
+  background-color: var(--lin-card);
+  border: 1px solid var(--lin-edge);
+  border-radius: 8px;
+  color: var(--lin-grey);
+}
+
+.theme-dark .search-result-file-match {
+  color: var(--lin-grey);
+}
+
+@media (hover: hover) {
+  .theme-dark .search-result-file-match:hover {
+    color: var(--lin-text);
+    background-color: var(--lin-menu-hover);
+  }
+}
+
+.theme-dark .search-result-file-title {
+  font-weight: 500;
+}
+
+/* Link preview on hover: the same floating card as menus. */
+.theme-dark .popover.hover-popover {
+  border: 1px solid #323336;
+  border-radius: 10px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45);
+}
+
+/* ---------- Community plugins ---------- */
+
+/* Editing Toolbar, default look: a quiet bar with grey icons that turn white under the pointer. Its custom and
+   glass looks keep the colors chosen in its own settings. */
+.theme-dark #editingToolbarModalBar.editingToolbarDefaultAesthetic {
+  background-color: var(--lin-panel);
+  border-color: var(--lin-line);
+}
+
+.theme-dark #editingToolbarPopoverBar.editingToolbarDefaultAesthetic {
+  background-color: var(--lin-menu);
+  border: 1px solid #323336;
+  border-radius: 8px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.35);
+}
+
+.theme-dark :is(#editingToolbarModalBar, #editingToolbarPopoverBar).editingToolbarDefaultAesthetic button[class^='editingToolbarCommand'] {
+  color: var(--lin-grey);
+  border-radius: 6px;
+}
+
+@media (hover: hover) {
+  .theme-dark :is(#editingToolbarModalBar, #editingToolbarPopoverBar).editingToolbarDefaultAesthetic button[class^='editingToolbarCommand']:hover {
+    color: var(--lin-white);
+    background-color: var(--lin-menu-hover);
+  }
+}
+
+/* Notebook Navigator: folders and notes read like the sidebar (grey, white when hovered or open); notes in the
+   list are quiet cards with the indigo selection. Only its color variables are set. */
+body.theme-dark {
+  --nn-theme-nav-bg: var(--lin-frame);
+  --nn-theme-list-bg: var(--lin-panel);
+  --nn-theme-navitem-name-color: var(--lin-grey);
+  --nn-theme-navitem-icon-color: var(--lin-quiet);
+  --nn-theme-navitem-chevron-color: var(--lin-quiet);
+  --nn-theme-navitem-count-color: var(--lin-quiet);
+  --nn-theme-navitem-hover-bg: rgba(255, 255, 255, 0.04);
+  --nn-theme-navitem-selected-bg: var(--lin-control);
+  --nn-theme-navitem-selected-name-color: var(--lin-white);
+  --nn-theme-navitem-selected-icon-color: var(--lin-white);
+  --nn-theme-navitem-border-radius: 6px;
+  --nn-theme-navitem-name-font-weight: 500;
+  --nn-theme-file-name-color: var(--lin-text);
+  --nn-theme-file-name-font-weight: 500;
+  --nn-theme-file-preview-color: var(--lin-grey);
+  --nn-theme-file-date-color: var(--lin-quiet);
+  --nn-theme-file-parent-color: var(--lin-quiet);
+  --nn-theme-file-selected-bg: #1c1d26;
+  --nn-theme-file-selected-inactive-bg: var(--lin-control);
+  --nn-theme-file-selected-name-color: var(--lin-white);
+  --nn-theme-file-tag-border-color: var(--lin-edge-strong);
+  --nn-theme-file-tag-color: var(--lin-grey);
+  --nn-theme-list-separator-color: var(--lin-line);
+  --nn-theme-list-heading-color: var(--lin-grey);
+  --nn-theme-list-group-header-color: var(--lin-quiet);
+  --nn-theme-list-header-breadcrumb-color: var(--lin-grey);
+  --nn-theme-header-button-icon-color: var(--lin-grey);
+  --nn-theme-header-button-active-icon-color: var(--lin-white);
+  --nn-theme-header-button-hover-bg: var(--lin-menu-hover);
+  --nn-theme-divider-border-color: var(--lin-line);
+}
+
+/* Omnisearch: grey meta and excerpts, matches marked with the same indigo tint as Obsidian's search. */
+.theme-dark .omnisearch-result__folder-path,
+.theme-dark .omnisearch-result__extension,
+.theme-dark .omnisearch-result__counter {
+  color: var(--lin-quiet);
+}
+
+.theme-dark .omnisearch-result__icon {
+  color: var(--lin-grey);
+}
+
+.theme-dark .omnisearch-result__body {
+  color: var(--lin-grey);
+}
+
+.theme-dark .omnisearch-default-highlight {
+  text-decoration: none;
+  background-color: rgba(94, 106, 210, 0.32);
+  color: var(--lin-white);
+  border-radius: 2px;
+}
+
+body.theme-dark {
+  --omnisearch-highlight-color: rgba(94, 106, 210, 0.45);
+  --omnisearch-highlight-text-color: var(--lin-white);
+}
+
+/* TaskNotes: board columns and headers a shade lighter than the panel, hairline edges, grey secondary text.
+   Only its own color variables are set, so its layouts stay as they are. */
+.theme-dark .tasknotes-plugin {
+  --tn-bg-primary: var(--lin-raised);
+  --tn-bg-primary-alt: var(--lin-card);
+  --tn-bg-secondary: var(--lin-raised);
+  --tn-bg-secondary-alt: var(--lin-card);
+  --tn-border-color: var(--lin-edge);
+  --tn-border-color-hover: var(--lin-edge-strong);
+  --tn-text-normal: var(--lin-text);
+  --tn-text-muted: var(--lin-grey);
+  --tn-text-faint: var(--lin-quiet);
+}
+
+.theme-dark .tasknotes-plugin .task-card__title {
+  font-weight: 500;
+}
+
+/* Excalidraw (dark drawings, with its "Dynamic styling" turned off): toolbars are the theme's dark pills, the
+   selected tool takes the indigo accent. With dynamic styling on, Excalidraw sets these colors itself. */
+.theme-dark .excalidraw.theme--dark {
+  --island-bg-color: var(--lin-menu);
+  --default-bg-color: var(--lin-panel);
+  --color-primary: #5e6ad2;
+  --color-primary-darker: #5460c8;
+  --color-primary-darkest: #4a55bd;
+  --color-primary-light: rgba(94, 106, 210, 0.28);
+  --button-gray-1: var(--lin-menu-hover);
+  --button-gray-2: var(--lin-control);
+  --icon-fill-color: var(--lin-text);
+}
+
+/* Tasks: the query filter (an input with no type, so no theme reaches it) gets the theme's input; links back
+   to the source note are quiet grey, white on hover. */
+.theme-dark .plugin-tasks-toolbar input:not([type]) {
+  height: var(--input-height);
+  padding-inline-end: 10px;
+  border: 0;
+  border-radius: var(--input-radius);
+  background: var(--lin-control);
+  box-shadow: var(--input-shadow);
+  color: var(--lin-text);
+  font-size: var(--font-ui-small);
+}
+.theme-dark .plugin-tasks-toolbar svg {
+  color: var(--lin-quiet);
+}
+.theme-dark .plugin-tasks-toolbar input:not([type]):focus {
+  box-shadow: inset 0 0 0 1px #5e6ad2;
+}
+.theme-dark .tasks-backlink,
+.theme-dark .tasks-backlink a.internal-link {
+  color: var(--lin-quiet);
+  text-decoration: none;
+}
+@media (hover: hover) {
+  .theme-dark .tasks-backlink a.internal-link:hover {
+    color: var(--lin-text);
+    text-decoration: underline;
+  }
+}
+
+/* Git: change letters in the theme's muted colors instead of pure orange and red. */
+.theme-dark .git-tools .type[data-type='M'] {
+  color: #c7a35a;
+}
+.theme-dark .git-tools .type[data-type='D'] {
+  color: #e5484d;
+}
+.theme-dark .git-tools .type[data-type='U'],
+.theme-dark .git-tools .type[data-type='A'] {
+  color: #6fae8f;
+}
+
+/* Buba's tree lines (Settings → Buba → Tree): the theme hides Obsidian's indentation guides, but when lines are
+   turned on in Buba, folders and tags without a color get Obsidian's own grey line, as without the theme. */
+.theme-dark .buba-tree {
+  --nav-indentation-guide-color: var(--indentation-guide-color);
 }
 
 /* ---------- Kiki (similar pictures window) ---------- */
