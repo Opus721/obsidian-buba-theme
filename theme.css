@@ -3,6 +3,26 @@
    pointer and on the open item. Font: Inter, the copy that ships with Obsidian (nothing is embedded or downloaded).
    The light mode is left as Obsidian's. */
 
+/* @settings
+
+name: Buba theme
+id: buba-theme
+settings:
+  -
+    id: buba-theme-tree-round
+    title: Rounded tree line corners
+    description: In the Buba tree, lines bend into rows with a rounded corner instead of a short slant.
+    type: class-toggle
+    default: false
+  -
+    id: buba-theme-tree-thick
+    title: Thick tree lines
+    description: Lines in the Buba tree are 2 px instead of 1 px.
+    type: class-toggle
+    default: false
+
+*/
+
 /* ---------- Palette and font ---------- */
 
 body {
@@ -458,6 +478,11 @@ body.theme-dark.is-mobile {
 }
 body.theme-dark.is-mobile .menu {
   --menu-background: var(--lin-frame);
+}
+/* Phone: the sheet keeps Obsidian's own padding (16px at the sides, the home bar's height at the bottom), which
+   the theme's desktop menu padding would otherwise shrink to 4px, so cards don't stick to the screen edges. */
+body.theme-dark.is-phone {
+  --menu-padding: var(--size-4-2) var(--size-4-4) var(--safe-area-inset-bottom);
 }
 body.theme-dark.is-phone .menu-item {
   border-radius: 0;
@@ -1100,10 +1125,226 @@ body.theme-dark {
   color: #6fae8f;
 }
 
-/* Buba's tree lines (Settings → Buba → Tree): the theme hides Obsidian's indentation guides, but when lines are
-   turned on in Buba, folders and tags without a color get Obsidian's own grey line, as without the theme. */
+/* Buba's tree lines (Settings → Buba → Tree → Lines): the theme hides Obsidian's indentation guides and draws
+   its own in the Buba tree, like Linear's sidebar. Each child row gets a line under its parent's icon that bends
+   into the row and stops short of the row's icon: a short slant by default, a rounded corner with the Style
+   Settings option. Buba's setting decides as without the theme: Off — no lines; Grey — grey lines; Color —
+   lines in the folder color at the set opacity. The path to the open folder (rows marked `mod-active-path` by
+   Buba) is drawn at full strength: each piece in the color of the folder it hangs from, light grey when that
+   folder has none or the lines are grey. Values captured on `.tree-item-children` are the parent row's: a
+   custom property with var() is computed where it is declared, so child rows that set their own color do not
+   change their parent's line. Geometry follows Buba's tree variables, so phone sizes and tree settings apply. */
 .theme-dark .buba-tree {
   --nav-indentation-guide-color: var(--indentation-guide-color);
+  /* Rows start here: the arrows' place is gone (below). */
+  --buba-theme-start: var(--size-4-2);
+  --buba-theme-line: 1px;
+  --buba-theme-icon: round(var(--icon-xs), 1px);
+  --buba-theme-row: calc(var(--buba-tree-line) + 2 * var(--buba-tree-row-pad));
+  /* Inside a child row: x of the parent icon's middle, x where the row's own icon starts. */
+  --buba-theme-x: calc(
+    var(--buba-theme-start) + var(--buba-tree-icon-shift) + var(--buba-theme-icon) / 2 - var(--buba-tree-indent) -
+      var(--size-2-2) - var(--nav-indentation-guide-width, 1px)
+  );
+  --buba-theme-icon-x: calc(var(--buba-theme-start) + var(--buba-tree-icon-shift));
+  /* The first child's line starts 3 px under the parent icon. */
+  --buba-theme-first: calc(
+    3px + var(--buba-tree-row-pad) + round(down, calc((var(--buba-tree-line) - var(--buba-theme-icon)) / 2), 1px) +
+      var(--buba-theme-icon) - var(--buba-theme-row)
+  );
+  --buba-theme-mid: round(calc(var(--buba-theme-row) / 2), 1px);
+}
+
+body.theme-dark.buba-theme-tree-thick .buba-tree {
+  --buba-theme-line: 2px;
+}
+
+/* Buba's own straight lines give way to the theme's. */
+.theme-dark .buba-tree .tree-item-children {
+  border-inline-start-color: transparent;
+  --buba-theme-guide: var(--buba-tree-guide-color);
+  --buba-theme-path: transparent;
+  --buba-theme-seg: initial;
+  --buba-theme-corner: initial;
+}
+
+body.theme-dark.buba-tree-lines-grey .buba-tree .tree-item-children {
+  --buba-theme-path: var(--icon-color);
+}
+
+body.theme-dark.buba-tree-lines-color .buba-tree .tree-item-children {
+  --buba-theme-path: var(--buba-color, var(--icon-color));
+}
+
+/* Solid line colors: Buba's are see-through (Obsidian's grey line, a folder or group color at the set
+   opacity), so where two pieces of a line meet the overlap would show twice as bright. The theme mixes the
+   same colors over the sidebar background instead, so pieces can meet and overlap without a seam or a gap.
+   Colors hard to see on the theme keep Buba's `--text-faint`, which is solid already. */
+body.theme-dark.buba-tree-lines-grey .buba-tree,
+body.theme-dark.buba-tree-lines-color .buba-tree,
+body.theme-dark.buba-tree-lines-color .buba-tree .tree-item {
+  --buba-tree-guide-color: color-mix(in srgb, white 12%, var(--lin-frame));
+}
+
+body.theme-dark.buba-tree-lines-color .buba-tree .tree-item.mod-folder-color:not(.mod-low-contrast-dark),
+body.theme-dark.buba-tree-lines-color .buba-tag-tree .tree-item.mod-tag-color:not(.mod-low-contrast-dark) {
+  --buba-tree-guide-color: color-mix(in srgb, var(--buba-color) var(--buba-tree-guide-alpha, 40%), var(--lin-frame));
+}
+
+/* `flow-root` keeps the row's bottom margin inside the row, so a line running to the row's bottom meets the
+   next row without a gap. */
+.theme-dark .buba-tree .tree-item-children > .tree-item {
+  position: relative;
+  display: flow-root;
+  --buba-theme-top: 0px;
+}
+
+.theme-dark .buba-tree .tree-item-children > .tree-item:first-child {
+  --buba-theme-top: var(--buba-theme-first);
+}
+
+/* Rows before the one on the path: their line is the path's. The row on the path: its corner. */
+.theme-dark .buba-tree .tree-item-children > .tree-item:has(~ .tree-item.mod-active-path) {
+  --buba-theme-seg: var(--buba-theme-path);
+}
+
+.theme-dark .buba-tree .tree-item-children > .tree-item.mod-active-path {
+  --buba-theme-corner: var(--buba-theme-path);
+}
+
+.theme-dark .buba-tree .tree-item-children > .tree-item::before,
+.theme-dark .buba-tree .tree-item-children > .tree-item::after {
+  content: '';
+  position: absolute;
+  z-index: 1;
+  left: calc(var(--buba-theme-x) - var(--buba-theme-line) / 2);
+  top: var(--buba-theme-top);
+  pointer-events: none;
+}
+
+/* The line through the row on to the next one; the last row has only its corner. Rows before the one on the
+   path: the path's line lies over their corners' straight part. */
+.theme-dark .buba-tree .tree-item-children > .tree-item::before {
+  bottom: 0;
+  border-inline-start: var(--buba-theme-line) solid var(--buba-theme-seg, var(--buba-theme-guide));
+}
+
+.theme-dark .buba-tree .tree-item-children > .tree-item:has(~ .tree-item.mod-active-path)::before {
+  z-index: 2;
+}
+
+.theme-dark .buba-tree .tree-item-children > .tree-item:last-child::before {
+  display: none;
+}
+
+/* Corner, slanted: the line down to 6 px above the row's middle, then an 8 × 6 px slant (a mask in the line
+   color). */
+.theme-dark .buba-tree .tree-item-children > .tree-item::after {
+  width: 8px;
+  height: calc(var(--buba-theme-mid) - var(--buba-theme-top));
+  background-color: var(--buba-theme-corner, var(--buba-theme-guide));
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg%20xmlns=%22http://www.w3.org/2000/svg%22%20viewBox=%220%200%208%206%22%3E%3Cpath%20d=%22M0.5%20-1%20V0.4%20Q0.5%201.6%201.4%202.5%20L4.8%205.5%22%20fill=%22none%22%20stroke=%22%23000%22%20stroke-width=%221%22%20stroke-linecap=%22round%22/%3E%3C/svg%3E"), linear-gradient(#000, #000);
+  mask-image: url("data:image/svg+xml,%3Csvg%20xmlns=%22http://www.w3.org/2000/svg%22%20viewBox=%220%200%208%206%22%3E%3Cpath%20d=%22M0.5%20-1%20V0.4%20Q0.5%201.6%201.4%202.5%20L4.8%205.5%22%20fill=%22none%22%20stroke=%22%23000%22%20stroke-width=%221%22%20stroke-linecap=%22round%22/%3E%3C/svg%3E"), linear-gradient(#000, #000);
+  -webkit-mask-size: 8px 6px, var(--buba-theme-line) calc(100% - 6px);
+  mask-size: 8px 6px, var(--buba-theme-line) calc(100% - 6px);
+  -webkit-mask-position: left bottom, left top;
+  mask-position: left bottom, left top;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+}
+
+body.theme-dark.buba-theme-tree-thick .buba-tree .tree-item-children > .tree-item::after {
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg%20xmlns=%22http://www.w3.org/2000/svg%22%20viewBox=%220%200%208%206%22%3E%3Cpath%20d=%22M1%20-1%20V0.4%20Q1%201.6%201.9%202.5%20L5.2%205.4%22%20fill=%22none%22%20stroke=%22%23000%22%20stroke-width=%222%22%20stroke-linecap=%22round%22/%3E%3C/svg%3E"), linear-gradient(#000, #000);
+  mask-image: url("data:image/svg+xml,%3Csvg%20xmlns=%22http://www.w3.org/2000/svg%22%20viewBox=%220%200%208%206%22%3E%3Cpath%20d=%22M1%20-1%20V0.4%20Q1%201.6%201.9%202.5%20L5.2%205.4%22%20fill=%22none%22%20stroke=%22%23000%22%20stroke-width=%222%22%20stroke-linecap=%22round%22/%3E%3C/svg%3E"), linear-gradient(#000, #000);
+}
+
+/* Corner, rounded (Style Settings): down and round into the row, ending 5 px before its icon. */
+body.theme-dark.buba-theme-tree-round .buba-tree .tree-item-children > .tree-item::after {
+  width: calc(var(--buba-theme-icon-x) - var(--buba-theme-x) - 5px);
+  background: none;
+  -webkit-mask: none;
+  mask: none;
+  border-inline-start: var(--buba-theme-line) solid var(--buba-theme-corner, var(--buba-theme-guide));
+  border-bottom: var(--buba-theme-line) solid var(--buba-theme-corner, var(--buba-theme-guide));
+  border-end-start-radius: 6px;
+}
+
+/* Arrows after the name, like the team name in Linear's sidebar (Buba 1.1.0): the tree keeps no column for them
+   on the left and moves left into its place. A small triangle follows the name (and a tag group's mark), the
+   count stays at the right edge. A press on the triangle expands or collapses the row; a press on the icon or
+   the name opens the folder, as everywhere. The triangle's box is as high as the row and wider than the
+   triangle, so a finger hits it on the phone. */
+.theme-dark .buba-tree .tree-item-self {
+  padding-inline-start: calc(var(--buba-theme-start) + var(--buba-tree-icon-shift));
+}
+
+.theme-dark .buba-tree .tree-item-self > .tree-item-inner {
+  flex: 0 1 auto;
+  min-width: 0;
+}
+
+.theme-dark .buba-tree .tree-item-self > .tree-item-flair-outer {
+  order: 2;
+  margin-inline-start: auto;
+}
+
+.theme-dark .buba-tree .tree-item-self > .collapse-icon {
+  --buba-theme-arrow-box: 18px;
+  position: static;
+  order: 1;
+  flex: none;
+  align-self: flex-start;
+  align-items: center;
+  justify-content: center;
+  width: var(--buba-theme-arrow-box);
+  height: var(--buba-theme-row);
+  margin-block: calc(-1 * var(--buba-tree-row-pad));
+  margin-inline: 0;
+  padding: 0;
+  translate: 0 var(--buba-tree-text-y);
+}
+
+.is-mobile.theme-dark .buba-tree .tree-item-self > .collapse-icon {
+  --buba-theme-arrow-box: 32px;
+}
+
+/* Linear's arrow: a small filled triangle, darker than the name, as light as the name on hover. Obsidian's
+   chevron is replaced by the triangle drawn in the icon's color, so Obsidian's turn for a collapsed row and
+   Buba's folder-colored arrow (Settings → Buba) apply to it as to the chevron. */
+.theme-dark .buba-tree .tree-item-self > .collapse-icon > svg {
+  width: 8px;
+  height: 8px;
+  margin: 0;
+  background-color: currentColor;
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8'%3E%3Cpath d='M1.6 2.2h4.8a.6.6 0 0 1 .47.97L4.47 6.1a.6.6 0 0 1-.94 0L1.13 3.17a.6.6 0 0 1 .47-.97z'/%3E%3C/svg%3E")
+    center / 8px 8px no-repeat;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8'%3E%3Cpath d='M1.6 2.2h4.8a.6.6 0 0 1 .47.97L4.47 6.1a.6.6 0 0 1-.94 0L1.13 3.17a.6.6 0 0 1 .47-.97z'/%3E%3C/svg%3E")
+    center / 8px 8px no-repeat;
+}
+
+.theme-dark .buba-tree .tree-item-self > .collapse-icon > svg > * {
+  display: none;
+}
+
+@media (hover: hover) {
+  .theme-dark .buba-tree .tree-item-self:hover > .collapse-icon > svg {
+    color: var(--nav-item-color-hover);
+  }
+}
+
+body.theme-dark.buba-tree-arrow-color
+  .buba-tree
+  .tree-item.mod-folder-color:not(.mod-low-contrast-dark)
+  > .tree-item-self:hover
+  > .collapse-icon
+  > svg,
+body.theme-dark.buba-tree-arrow-color
+  .buba-tag-tree
+  .tree-item.mod-tag-color:not(.mod-low-contrast-dark)
+  > .tree-item-self:hover
+  > .collapse-icon
+  > svg {
+  color: var(--buba-color);
 }
 
 /* ---------- Kiki (similar pictures window) ---------- */
