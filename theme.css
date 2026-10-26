@@ -1308,6 +1308,26 @@ body.theme-dark.buba-theme-tree-round .buba-tree .tree-item-children > .tree-ite
   --buba-theme-arrow-box: 32px;
 }
 
+/* Phone and tablet: a finger missed the triangle's 32 px box. The box is 56 px wide and reaches 8 px over the
+   end of the name, twice the old width; the triangle stays where it was, 12 px into the box. A press on the
+   rest of the name, on the icon or further right still opens the folder. A long name keeps its room: the box
+   gives way down to the old 32 px. */
+.is-mobile.theme-dark .buba-tree .tree-item-self > .collapse-icon {
+  position: relative;
+  flex: 0 1 56px;
+  min-width: var(--buba-theme-arrow-box);
+  justify-content: flex-start;
+  padding-inline-start: calc((var(--buba-theme-arrow-box) - 8px) / 2);
+}
+
+.is-mobile.theme-dark .buba-tree .tree-item-self > .collapse-icon::before {
+  content: '';
+  position: absolute;
+  inset-block: 0;
+  inset-inline-start: -8px;
+  width: 8px;
+}
+
 /* Linear's arrow: a small filled triangle, darker than the name, as light as the name on hover. Obsidian's
    chevron is replaced by the triangle drawn in the icon's color, so Obsidian's turn for a collapsed row and
    Buba's folder-colored arrow (Settings → Buba) apply to it as to the chevron. */
