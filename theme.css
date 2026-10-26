@@ -1270,8 +1270,8 @@ body.theme-dark.buba-theme-tree-round .buba-tree .tree-item-children > .tree-ite
 }
 
 /* Arrows after the name, like the team name in Linear's sidebar (Buba 1.1.0): the tree keeps no column for them
-   on the left and moves left into its place. A small triangle follows the name (and a tag group's mark), the
-   count stays at the right edge. A press on the triangle expands or collapses the row; a press on the icon or
+   on the left and moves left into its place. A small triangle follows the name, the count stays at the right
+   edge. A press on the triangle expands or collapses the row; a press on the icon or
    the name opens the folder, as everywhere. The triangle's box is as high as the row and wider than the
    triangle, so a finger hits it on the phone. */
 .theme-dark .buba-tree .tree-item-self {
@@ -1286,6 +1286,17 @@ body.theme-dark.buba-theme-tree-round .buba-tree .tree-item-children > .tree-ite
 .theme-dark .buba-tree .tree-item-self > .tree-item-flair-outer {
   order: 2;
   margin-inline-start: auto;
+}
+
+/* A tag group's exclusive mark belongs to the count, not to the name: it stays just before the count at the
+   right edge, after the triangle; the gap to the count is the count block's own padding, as without the theme. */
+.theme-dark .buba-tree .tree-item-self > .buba-tag-group-mark {
+  order: 2;
+  margin-inline-start: auto;
+}
+
+.theme-dark .buba-tree .tree-item-self > .buba-tag-group-mark + .tree-item-flair-outer {
+  margin-inline-start: 0;
 }
 
 .theme-dark .buba-tree .tree-item-self > .collapse-icon {
@@ -1308,16 +1319,16 @@ body.theme-dark.buba-theme-tree-round .buba-tree .tree-item-children > .tree-ite
   --buba-theme-arrow-box: 32px;
 }
 
-/* Phone and tablet: a finger missed the triangle's 32 px box. The box is 56 px wide and reaches 8 px over the
-   end of the name, twice the old width; the triangle stays where it was, 12 px into the box. A press on the
-   rest of the name, on the icon or further right still opens the folder. A long name keeps its room: the box
-   gives way down to the old 32 px. */
+/* Phone and tablet: a finger missed the triangle's 32 px box. The triangle sits as close to the name as on a
+   computer, 5 px ((18 − 8) / 2), and its box takes all the free room between the name and the count, at least
+   32 px, and reaches 8 px over the end of the name. A press on the rest of the name or on the icon still opens
+   the folder. */
 .is-mobile.theme-dark .buba-tree .tree-item-self > .collapse-icon {
   position: relative;
-  flex: 0 1 56px;
+  flex: 1 1 auto;
   min-width: var(--buba-theme-arrow-box);
   justify-content: flex-start;
-  padding-inline-start: calc((var(--buba-theme-arrow-box) - 8px) / 2);
+  padding-inline-start: 5px;
 }
 
 .is-mobile.theme-dark .buba-tree .tree-item-self > .collapse-icon::before {
