@@ -15,12 +15,6 @@ settings:
     type: class-toggle
     default: false
   -
-    id: buba-theme-arrow-left
-    title: Tree arrows on the left
-    description: In the Buba tree, the arrow that opens a folder or a tag group stands on the left, as in Obsidian, and tree lines start under it. Off — a small triangle after the name, like Linear.
-    type: class-toggle
-    default: false
-  -
     id: buba-theme-tree-thick
     title: Thick tree lines
     description: Lines in the Buba tree are 2 px instead of 1 px.
@@ -1165,20 +1159,6 @@ body.theme-dark.buba-theme-tree-thick .buba-tree {
   --buba-theme-line: 2px;
 }
 
-/* Arrows on the left (Style Settings): rows start where Buba puts them, after the arrow's column, and a child
-   row's line hangs from the middle of its parent's arrow, Buba's own line place (`--buba-tree-guide-at`), and
-   starts 1 px under the arrow's box. */
-body.theme-dark.buba-theme-arrow-left .buba-tree {
-  --buba-theme-start: var(--size-4-6);
-  --buba-theme-x: calc(
-    var(--buba-tree-guide-at) - var(--buba-tree-indent) - var(--size-2-2) - var(--nav-indentation-guide-width, 1px)
-  );
-  --buba-theme-first: calc(
-    1px + var(--buba-tree-row-pad) + round(down, calc((var(--buba-tree-line) - 8px) / 2), 1px) + 8px -
-      var(--buba-theme-row)
-  );
-}
-
 /* Tag names and counts on a phone: Buba lifts them 1 px more than folder names, and with the theme they sat
    1 px above the middle of the row; here they move as folder names do. */
 .is-phone.theme-dark .buba-tree {
@@ -1295,31 +1275,21 @@ body.theme-dark.buba-theme-tree-round .buba-tree .tree-item-children > .tree-ite
   border-end-start-radius: 6px;
 }
 
-/* With arrows on the left the rounded corner of a row with an arrow ends 3 px before the arrow's box, which is
-   4 px left of the arrow's middle, so it never runs into the arrow; a row without one keeps the corner up to
-   its icon. */
-body.theme-dark.buba-theme-arrow-left.buba-theme-tree-round
-  .buba-tree
-  .tree-item-children
-  > .tree-item:has(> .tree-item-self.mod-collapsible)::after {
-  width: calc(var(--buba-tree-guide-at) - 7px - var(--buba-theme-x));
-}
-
 /* Arrows after the name, like the team name in Linear's sidebar (Buba 1.1.0): the tree keeps no column for them
    on the left and moves left into its place. A small triangle follows the name, the count stays at the right
    edge. A press on the triangle expands or collapses the row; a press on the icon or
    the name opens the folder, as everywhere. The triangle's box is as high as the row and wider than the
    triangle, so a finger hits it on the phone. */
-body.theme-dark:not(.buba-theme-arrow-left) .buba-tree .tree-item-self {
+.theme-dark .buba-tree .tree-item-self {
   padding-inline-start: calc(var(--buba-theme-start) + var(--buba-tree-icon-shift));
 }
 
-body.theme-dark:not(.buba-theme-arrow-left) .buba-tree .tree-item-self > .tree-item-inner {
+.theme-dark .buba-tree .tree-item-self > .tree-item-inner {
   flex: 0 1 auto;
   min-width: 0;
 }
 
-body.theme-dark:not(.buba-theme-arrow-left) .buba-tree .tree-item-self > .tree-item-flair-outer {
+.theme-dark .buba-tree .tree-item-self > .tree-item-flair-outer {
   order: 2;
   margin-inline-start: auto;
 }
@@ -1335,7 +1305,7 @@ body.theme-dark:not(.buba-theme-arrow-left) .buba-tree .tree-item-self > .tree-i
   margin-inline-start: 0;
 }
 
-body.theme-dark:not(.buba-theme-arrow-left) .buba-tree .tree-item-self > .collapse-icon {
+.theme-dark .buba-tree .tree-item-self > .collapse-icon {
   --buba-theme-arrow-box: 18px;
   position: static;
   order: 1;
@@ -1351,7 +1321,7 @@ body.theme-dark:not(.buba-theme-arrow-left) .buba-tree .tree-item-self > .collap
   translate: 0 var(--buba-tree-text-y);
 }
 
-body.is-mobile.theme-dark:not(.buba-theme-arrow-left) .buba-tree .tree-item-self > .collapse-icon {
+.is-mobile.theme-dark .buba-tree .tree-item-self > .collapse-icon {
   --buba-theme-arrow-box: 32px;
 }
 
@@ -1359,7 +1329,7 @@ body.is-mobile.theme-dark:not(.buba-theme-arrow-left) .buba-tree .tree-item-self
    computer, 5 px ((18 − 8) / 2), and its box takes all the free room between the name and the count, at least
    32 px, and reaches 8 px over the end of the name. A press on the rest of the name or on the icon still opens
    the folder. */
-body.is-mobile.theme-dark:not(.buba-theme-arrow-left) .buba-tree .tree-item-self > .collapse-icon {
+.is-mobile.theme-dark .buba-tree .tree-item-self > .collapse-icon {
   position: relative;
   flex: 1 1 auto;
   min-width: var(--buba-theme-arrow-box);
@@ -1367,7 +1337,7 @@ body.is-mobile.theme-dark:not(.buba-theme-arrow-left) .buba-tree .tree-item-self
   padding-inline-start: 5px;
 }
 
-body.is-mobile.theme-dark:not(.buba-theme-arrow-left) .buba-tree .tree-item-self > .collapse-icon::before {
+.is-mobile.theme-dark .buba-tree .tree-item-self > .collapse-icon::before {
   content: '';
   position: absolute;
   inset-block: 0;
@@ -1381,15 +1351,12 @@ body.is-mobile.theme-dark:not(.buba-theme-arrow-left) .buba-tree .tree-item-self
 .theme-dark .buba-tree .tree-item-self > .collapse-icon > svg {
   width: 8px;
   height: 8px;
+  margin: 0;
   background-color: currentColor;
   -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8'%3E%3Cpath d='M1.6 2.2h4.8a.6.6 0 0 1 .47.97L4.47 6.1a.6.6 0 0 1-.94 0L1.13 3.17a.6.6 0 0 1 .47-.97z'/%3E%3C/svg%3E")
     center / 8px 8px no-repeat;
   mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8'%3E%3Cpath d='M1.6 2.2h4.8a.6.6 0 0 1 .47.97L4.47 6.1a.6.6 0 0 1-.94 0L1.13 3.17a.6.6 0 0 1 .47-.97z'/%3E%3C/svg%3E")
     center / 8px 8px no-repeat;
-}
-
-body.theme-dark:not(.buba-theme-arrow-left) .buba-tree .tree-item-self > .collapse-icon > svg {
-  margin: 0;
 }
 
 .theme-dark .buba-tree .tree-item-self > .collapse-icon > svg > * {
