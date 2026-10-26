@@ -7,7 +7,7 @@ A calm dark theme for Obsidian, made to go with the [Buba](https://github.com/Op
 - **Quiet text.** Labels and sidebar items are grey and turn white under the pointer or when open, so the content stands out and the interface does not.
 - **Frame and panel.** A near-black window frame holds a slightly lighter rounded panel for your notes and views. Tabs are small pills, menus are rounded and dark.
 - **Inter** for the interface and for notes: the copy that ships with Obsidian, so the theme stays small and loads nothing from the internet.
-- **Made for Buba.** Grid tiles are quiet cards, tags are round pills, the file panel reads like a property list. The theme works without Buba too.
+- **Made for Buba.** Folder and file tiles sit calmly on the dark panel, tags are round pills, the file panel reads like a property list. The theme works without Buba too.
 - **Core views and popular plugins.** Canvas controls, graph, Bases, properties, callouts, tables, search and link previews share the same look, and so do Excalidraw, Tasks, Omnisearch, Notebook Navigator, TaskNotes, Editing Toolbar, Advanced Canvas and Git.
 - Desktop, phone and tablet. Dark mode only: in light mode Obsidian's own look stays.
 
