@@ -469,6 +469,9 @@ body {
    but with a much stronger blur, so busy content behind them turns into soft colour and nothing is readable
    through them. Menu items sit on grey cards, one card per group, over the darker sheet. */
 body.theme-dark.is-mobile {
+  /* Fields keep Obsidian's touch height on phones and tablets: the desktop 30px left the tag search in the Buba
+     tree cramped against its underline and the first tag (owner, 27.10 22:37). */
+  --input-height: var(--touch-size-m);
   --blur-opacity-s: 80%;
   --blur-opacity-m: 82%;
   --raised-blur: blur(24px) saturate(1.2);
