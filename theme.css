@@ -1294,6 +1294,17 @@ body.theme-dark.buba-theme-tree-round .buba-tree .tree-item-children > .tree-ite
   margin-inline-start: auto;
 }
 
+/* The count keeps the width of four digits whatever it is: a long name is cut with "…" at the same place in
+   every row, so the triangle after it stands still and a row with 7 files does not differ from one with 120
+   (word of the owner 26.10: better one letter less than a moving arrow). */
+.theme-dark .buba-tree .tree-item-self > .tree-item-flair-outer .tree-item-flair {
+  display: inline-block;
+  box-sizing: content-box;
+  min-width: 4ch;
+  font-variant-numeric: tabular-nums;
+  text-align: end;
+}
+
 /* A tag group's exclusive mark belongs to the count, not to the name: it stays just before the count at the
    right edge, after the triangle; the gap to the count is the count block's own padding, as without the theme. */
 .theme-dark .buba-tree .tree-item-self > .buba-tag-group-mark {
