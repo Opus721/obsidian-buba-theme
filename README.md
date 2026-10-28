@@ -9,7 +9,12 @@ A calm dark theme for Obsidian, made to go with the [Buba](https://github.com/Op
 - **Inter** for the interface and for notes: the copy that ships with Obsidian, so the theme stays small and loads nothing from the internet.
 - **Made for Buba.** Folder and file tiles sit calmly on the dark panel, tags are round pills, the file panel reads like a property list. The theme works without Buba too.
 - **Core views and popular plugins.** Canvas controls, graph, Bases, properties, callouts, tables, search and link previews share the same look, and so do Excalidraw, Tasks, Omnisearch, Notebook Navigator, TaskNotes, Editing Toolbar, Advanced Canvas and Git.
+- **Phone and tablet.** Menus, the command palette, suggestions and the bottom bar are frosted glass, menu groups are cards, and text fields are tall enough for a finger.
 - Desktop, phone and tablet. Dark mode only: in light mode Obsidian's own look stays.
+
+![Folder tiles of the Buba plugin in the Buba theme](docs/folders.png)
+
+![Buba on a phone in the Buba theme](docs/phone.png)
 
 ## Install
 
@@ -17,7 +22,7 @@ In Obsidian open **Settings → Appearance → Themes → Manage**, find **Buba*
 
 ## Buba tree
 
-With Buba 1.1.0 or later, the Buba tree has no arrow column on the left: a small arrow follows the folder or tag group name, as in Linear's sidebar, and a click or tap on it opens or closes the folder; the closed or open folder icon also shows the state. Tree lines follow Buba's own setting (**Settings → Buba → Tree → Lines**: off, grey or in the folder color) and look like Linear's sidebar: each line bends into its row with a short slant, and the path to the open folder is drawn brighter, in the color of each folder it passes. With the [Style Settings](https://github.com/mgmeyers/obsidian-style-settings) plugin, under **Buba theme**, you can switch to rounded corners and to thick 2 px lines.
+With Buba 1.1.0 or later, the Buba tree has no arrow column on the left: a small arrow follows the folder or tag group name, as in Linear's sidebar, and shows whether it is open, like the closed or open folder icon. A click or tap on the icon opens or closes the folder, a double click on the name too. Tree lines follow Buba's own setting (**Settings → Buba → Tree → Lines**: off, grey or in the folder color) and look like Linear's sidebar: each line bends into its row with a short slant, and the path to the open folder is drawn brighter, in the color of each folder it passes. With the [Style Settings](https://github.com/mgmeyers/obsidian-style-settings) plugin, under **Buba theme**, you can switch to rounded corners and to thick 2 px lines.
 
 ## Excalidraw
 
