@@ -582,6 +582,35 @@ body.theme-dark.is-phone .menu-item:not(.is-label) {
   box-shadow: none;
 }
 
+/* The phone bookmark sheet (Obsidian 1.14, measured on Android 28.10): Obsidian puts "Cancel" and "Save" flush
+   with the sheet's edges, 4 px under its top, the fields 16 px in and "Delete" 12 px narrower than the fields
+   on each side. Here the corner buttons' text lines up with the fields' edges and their middle with the
+   title's, and "Delete" spans the fields' width (word of the owner 28.10 12:18). The title is a step smaller,
+   so "Edit bookmark" keeps clear of the buttons on a 390 px phone. */
+body.theme-dark.is-phone .modal.mod-bookmark .modal-nav-action {
+  top: 8px;
+}
+
+body.theme-dark.is-phone .modal.mod-bookmark .modal-nav-action.mod-secondary {
+  left: 4px;
+}
+
+body.theme-dark.is-phone .modal.mod-bookmark .modal-nav-action.mod-cta {
+  right: 4px;
+}
+
+body.theme-dark.is-phone .modal.mod-bookmark .modal-title {
+  font-size: 15px;
+}
+
+body.theme-dark.is-phone .modal.mod-bookmark .modal-button-container {
+  padding-inline: 0;
+}
+
+body.theme-dark.is-phone .modal.mod-bookmark .modal-button-container button {
+  flex: 1;
+}
+
 .theme-dark :where(input[type='text'], input[type='search'], input[type='number'], textarea) {
   font-size: 13px;
 }
