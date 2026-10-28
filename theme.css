@@ -469,6 +469,9 @@ body {
    but with a much stronger blur, so busy content behind them turns into soft colour and nothing is readable
    through them. Menu items sit on grey cards, one card per group, over the darker sheet. */
 body.theme-dark.is-mobile {
+  /* Fields keep Obsidian's touch height on phones and tablets: the desktop 30px left the tag search in the Buba
+     tree cramped against its underline and the first tag (owner, 27.10 22:37). */
+  --input-height: var(--touch-size-m);
   --blur-opacity-s: 80%;
   --blur-opacity-m: 82%;
   --raised-blur: blur(24px) saturate(1.2);
@@ -554,14 +557,55 @@ body.theme-dark.is-phone .menu-item:not(.is-label) {
 /* Buttons take Obsidian's own rule through the variables above (--interactive-normal, --interactive-hover,
    --input-shadow, --button-radius), so a plugin's own button shape (round arrows, glass buttons) still wins. */
 
-.theme-dark button.mod-cta {
+.theme-dark button.mod-cta:not(.modal-cta-button, .modal-header *, .modal-nav-action) {
   background-color: #5e6ad2;
   color: #ffffff;
   box-shadow: none;
 }
 
-.theme-dark button.mod-cta:hover {
+.theme-dark button.mod-cta:not(.modal-cta-button, .modal-header *, .modal-nav-action):hover {
   background-color: #6c78e0;
+}
+
+/* The phone sheet's "Cancel" and "Save" at the top corners (`.modal-nav-action`, the bookmark window of
+   Obsidian 1.14) and "Save" of other sheets (`.modal-cta-button`) are text buttons in Obsidian, at its own
+   places: filled or outlined, they reached into the sheet's round corner and were cut there (word of the
+   owner 27.10 21:59 and 28.10 08:40). Here they stay text, "Save" in the accent, without fill or outline. */
+.theme-dark button.mod-cta:is(.modal-cta-button, .modal-header *, .modal-nav-action) {
+  background-color: transparent;
+  color: var(--text-accent);
+  box-shadow: none;
+}
+
+.theme-dark button.modal-nav-action {
+  background-color: transparent;
+  box-shadow: none;
+}
+
+/* The phone bookmark sheet (Obsidian 1.14, measured on Android 28.10): Obsidian puts "Cancel" and "Save" flush
+   with the sheet's edges, 4 px under its top, the fields 16 px in and "Delete" 12 px narrower than the fields
+   on each side. Here the corner buttons' text lines up with the fields' edges and their middle with the
+   title's, and "Delete" spans the fields' width (word of the owner 28.10 12:18): the container is Obsidian's
+   column, which stretches the button once its side padding is gone. The title is a step smaller,
+   so "Edit bookmark" keeps clear of the buttons on a 390 px phone. */
+body.theme-dark.is-phone .modal.mod-bookmark .modal-nav-action {
+  top: 8px;
+}
+
+body.theme-dark.is-phone .modal.mod-bookmark .modal-nav-action.mod-secondary {
+  left: 4px;
+}
+
+body.theme-dark.is-phone .modal.mod-bookmark .modal-nav-action.mod-cta {
+  right: 4px;
+}
+
+body.theme-dark.is-phone .modal.mod-bookmark .modal-title {
+  font-size: 15px;
+}
+
+body.theme-dark.is-phone .modal.mod-bookmark .modal-button-container {
+  padding-inline: 0;
 }
 
 .theme-dark :where(input[type='text'], input[type='search'], input[type='number'], textarea) {
@@ -1292,6 +1336,17 @@ body.theme-dark.buba-theme-tree-round .buba-tree .tree-item-children > .tree-ite
 .theme-dark .buba-tree .tree-item-self > .tree-item-flair-outer {
   order: 2;
   margin-inline-start: auto;
+}
+
+/* The count keeps the width of four digits whatever it is: a long name is cut with "…" at the same place in
+   every row, so the triangle after it stands still and a row with 7 files does not differ from one with 120
+   (word of the owner 26.10: better one letter less than a moving arrow). */
+.theme-dark .buba-tree .tree-item-self > .tree-item-flair-outer .tree-item-flair {
+  display: inline-block;
+  box-sizing: content-box;
+  min-width: 4ch;
+  font-variant-numeric: tabular-nums;
+  text-align: end;
 }
 
 /* A tag group's exclusive mark belongs to the count, not to the name: it stays just before the count at the
