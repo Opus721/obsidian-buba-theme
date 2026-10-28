@@ -557,22 +557,28 @@ body.theme-dark.is-phone .menu-item:not(.is-label) {
 /* Buttons take Obsidian's own rule through the variables above (--interactive-normal, --interactive-hover,
    --input-shadow, --button-radius), so a plugin's own button shape (round arrows, glass buttons) still wins. */
 
-.theme-dark button.mod-cta:not(.modal-cta-button, .modal-header *) {
+.theme-dark button.mod-cta:not(.modal-cta-button, .modal-header *, .modal-nav-action) {
   background-color: #5e6ad2;
   color: #ffffff;
   box-shadow: none;
 }
 
-.theme-dark button.mod-cta:not(.modal-cta-button, .modal-header *):hover {
+.theme-dark button.mod-cta:not(.modal-cta-button, .modal-header *, .modal-nav-action):hover {
   background-color: #6c78e0;
 }
 
-/* The phone sheet's "Save" at the top right is a text button in Obsidian (`.modal-cta-button`): filled, it ran
-   past the screen edge and its text was lost (word of the owner 27.10 21:59). Here it stays text, in the
-   accent. */
-.theme-dark button.mod-cta:is(.modal-cta-button, .modal-header *) {
+/* The phone sheet's "Cancel" and "Save" at the top corners (`.modal-nav-action`, the bookmark window of
+   Obsidian 1.14) and "Save" of other sheets (`.modal-cta-button`) are text buttons in Obsidian, at its own
+   places: filled or outlined, they reached into the sheet's round corner and were cut there (word of the
+   owner 27.10 21:59 and 28.10 08:40). Here they stay text, "Save" in the accent, without fill or outline. */
+.theme-dark button.mod-cta:is(.modal-cta-button, .modal-header *, .modal-nav-action) {
   background-color: transparent;
   color: var(--text-accent);
+  box-shadow: none;
+}
+
+.theme-dark button.modal-nav-action {
+  background-color: transparent;
   box-shadow: none;
 }
 
