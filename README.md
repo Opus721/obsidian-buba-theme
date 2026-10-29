@@ -24,6 +24,10 @@ In Obsidian open **Settings → Appearance → Themes → Manage**, find **Buba*
 
 With Buba 1.1.0 or later, the Buba tree has no arrow column on the left: a small arrow follows the folder or tag group name, as in Linear's sidebar, and shows whether it is open, like the closed or open folder icon. A click or tap on the icon opens or closes the folder, a double click on the name too. Tree lines follow Buba's own setting (**Settings → Buba → Tree → Lines**: off, grey or in the folder color) and look like Linear's sidebar: each line bends into its row with a short slant, and the path to the open folder is drawn brighter, in the color of each folder it passes. With the [Style Settings](https://github.com/mgmeyers/obsidian-style-settings) plugin, under **Buba theme**, you can switch to rounded corners and to thick 2 px lines.
 
+## Buba bases
+
+Bases of the Buba plugin (tables, lists, boards, row pages) look like Linear's issue lists and boards: group headers and board swimlanes are grey bars, option values are grey chips with a coloured dot, relations are grey chips without an underline, board cards are a shade lighter than the panel with no shadow, and value menus are the theme's dark menus. On a computer the «+ New» lines show only a plus until the pointer is over them. On a phone, the arrow of a page in **Bases and pages** keeps its own small box, so a tap on the rest of the row opens the page.
+
 ## Excalidraw
 
 Excalidraw colors its toolbars itself while its **Dynamic styling** setting is on. To get the theme's dark toolbars, open Excalidraw's settings, go to **Theme and styling**, set **Dynamic styling** to **Dynamic Styling OFF** and turn on **New drawing to match Obsidian theme** and **Existing drawings to match Obsidian theme**.

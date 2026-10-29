@@ -1383,8 +1383,9 @@ body.theme-dark.buba-theme-tree-round .buba-tree .tree-item-children > .tree-ite
 /* Phone and tablet: a finger missed the triangle's 32 px box. The triangle sits as close to the name as on a
    computer, 5 px ((18 − 8) / 2), and its box takes all the free room between the name and the count, at least
    32 px, and reaches 8 px over the end of the name. A press on the rest of the name or on the icon still opens
-   the folder. */
-.is-mobile.theme-dark .buba-tree .tree-item-self > .collapse-icon {
+   the folder. Rows of «Bases and pages» are left out: a press on such a row opens its page, and only the arrow
+   folds it, so their arrow keeps its 32 px box. */
+.is-mobile.theme-dark .buba-tree .tree-item-self:not(.buba-section-row) > .collapse-icon {
   position: relative;
   flex: 1 1 auto;
   min-width: var(--buba-theme-arrow-box);
@@ -1392,7 +1393,13 @@ body.theme-dark.buba-theme-tree-round .buba-tree .tree-item-children > .tree-ite
   padding-inline-start: 5px;
 }
 
-.is-mobile.theme-dark .buba-tree .tree-item-self > .collapse-icon::before {
+/* The arrow of a page in «Bases and pages» stands as close to the name as a folder's, 5 px. */
+.is-mobile.theme-dark .buba-tree .tree-item-self.buba-section-row > .collapse-icon {
+  justify-content: flex-start;
+  padding-inline-start: 5px;
+}
+
+.is-mobile.theme-dark .buba-tree .tree-item-self:not(.buba-section-row) > .collapse-icon::before {
   content: '';
   position: absolute;
   inset-block: 0;
@@ -1437,6 +1444,191 @@ body.theme-dark.buba-tree-arrow-color
   > .collapse-icon
   > svg {
   color: var(--buba-color);
+}
+
+/* ---------- Buba bases (table, list, board, row page) ---------- */
+
+/* Like Linear's issue lists and boards: grey surfaces, colour only in small marks. Group headers are bars,
+   option values are grey chips with a coloured dot, board cards are a shade lighter than the panel. Rows keep
+   Buba's heights (Buba places them by those numbers), so only what is inside a row changes. */
+.theme-dark {
+  /* Group bars: Linear's group header on the panel. */
+  --lin-bar: #1a1a1c;
+  /* Chips of values and relations; lighter in menus, which are lighter themselves. */
+  --lin-chip: #202124;
+  --lin-chip-hover: #28292d;
+}
+
+.theme-dark .buba-base-pop {
+  --lin-chip: #2c2d31;
+  --lin-chip-hover: #35363b;
+}
+
+.theme-dark .buba-base-card {
+  --lin-chip: #25262a;
+  --lin-chip-hover: #2e2f33;
+}
+
+/* Group headers of the list and the table: a bar inside the 44 px slot, the label in its middle (Buba sets it
+   at the bottom over its own line, which the bar replaces). */
+.theme-dark .buba-base-group-head {
+  align-items: center;
+  padding-bottom: 0;
+  border-bottom-color: transparent;
+  background: linear-gradient(var(--lin-bar), var(--lin-bar)) center / 100% 34px no-repeat;
+}
+
+.theme-dark .buba-base-group-label {
+  color: var(--lin-white);
+}
+
+/* Board: swimlane headers are the same bar, columns are not tinted, cards are Linear cards with no shadow. */
+.theme-dark .buba-base-lane-head {
+  height: 36px;
+  margin-block: 8px 4px;
+  border-radius: 6px;
+  background-color: var(--lin-bar);
+}
+
+.theme-dark .buba-base-lane-inner {
+  background-color: var(--lin-bar);
+}
+
+.theme-dark .buba-base-lane-line {
+  visibility: hidden;
+}
+
+.theme-dark .buba-base-board.is-colored .buba-base-column {
+  background-color: rgba(255, 255, 255, 0.015);
+}
+
+.theme-dark .buba-base-column,
+.theme-dark .buba-base-column-head {
+  border-radius: 8px;
+}
+
+.theme-dark .buba-base-card {
+  border-radius: 8px;
+  background-color: var(--lin-card);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.045);
+}
+
+.theme-dark .buba-base-card:hover {
+  background-color: #1e1f21;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.08);
+}
+
+/* A colour rule on a card shows as a faint tint; its stripe (rule «on the left edge») stays as Buba draws it. */
+.theme-dark .buba-base-card.has-tint.mod-background {
+  background-color: color-mix(in srgb, var(--buba-base-tint) 5%, var(--lin-card));
+}
+
+.theme-dark .buba-base-card.has-tint.mod-background:hover {
+  background-color: color-mix(in srgb, var(--buba-base-tint) 9%, #1e1f21);
+}
+
+.theme-dark .buba-base-card.has-tint.mod-accent {
+  box-shadow:
+    inset 3px 0 0 var(--buba-base-tint),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.045);
+}
+
+/* Option values: Linear's labels, a grey chip with a coloured dot. */
+.theme-dark .buba-base-pill {
+  gap: 6px;
+  padding: 0 8px 0 7px;
+  background-color: var(--lin-chip);
+  color: var(--lin-text);
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.theme-dark .buba-base-pill::before {
+  content: '';
+  flex: none;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background-color: var(--buba-base-pill);
+}
+
+/* Relations: Linear's project chip, grey and not underlined. On a phone list row only the icon shows, with no
+   chip around it. */
+.theme-dark .buba-base-rel {
+  padding: 1px 8px 1px 6px;
+  border-radius: 999px;
+  background-color: var(--lin-chip);
+  color: var(--lin-text);
+  font-size: 12px;
+  font-weight: 500;
+  text-decoration: none;
+}
+
+.theme-dark .buba-base-rel:hover {
+  background-color: var(--lin-chip-hover);
+  text-decoration: none;
+}
+
+.theme-dark.is-phone .buba-base-list-row .buba-base-rel {
+  padding: 0;
+  background: none;
+}
+
+/* Titles white and medium; table headers grey. */
+.theme-dark .buba-base-title-text {
+  color: var(--lin-white);
+  font-weight: 500;
+}
+
+.theme-dark .buba-base-hcell {
+  color: var(--lin-grey);
+  font-weight: 500;
+}
+
+/* «+ New» lines on a computer: only the plus, the word shows under the pointer. A phone shows both. */
+@media (hover: hover) {
+  body.theme-dark:not(.is-mobile) :is(.buba-base-add, .buba-base-board-add) {
+    color: transparent;
+  }
+
+  body.theme-dark:not(.is-mobile) :is(.buba-base-add, .buba-base-board-add) svg {
+    color: var(--lin-quiet);
+  }
+
+  body.theme-dark:not(.is-mobile) :is(.buba-base-add, .buba-base-board-add):hover {
+    color: var(--lin-grey);
+  }
+}
+
+/* Menus of values and fields: the theme's menu — lighter than the panel, a hairline, rounded rows. A phone
+   sheet keeps Buba's shape and takes the same colours. */
+.theme-dark .buba-base-pop {
+  background-color: var(--lin-menu);
+  border-color: #323336;
+  border-radius: 8px;
+  box-shadow: var(--menu-shadow);
+}
+
+.theme-dark .buba-base-pop.mod-sheet {
+  background-color: var(--lin-frame);
+}
+
+.theme-dark :is(.buba-base-pop-row, .buba-base-picker-row) {
+  border-radius: 5px;
+  font-weight: 500;
+}
+
+@media (hover: hover) {
+  .theme-dark .buba-base-pop:not(.mod-sheet) :is(.buba-base-pop-row, .buba-base-picker-row):not(.is-disabled):hover {
+    background-color: var(--lin-menu-hover);
+    color: var(--lin-white);
+  }
+}
+
+/* Row page tabs: the open one white on the control grey, like the view tabs. */
+.theme-dark .buba-base-page-tab.is-active {
+  background-color: var(--lin-control);
+  color: var(--lin-white);
 }
 
 /* ---------- Kiki (similar pictures window) ---------- */

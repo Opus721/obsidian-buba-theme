@@ -2,6 +2,12 @@
 
 What changed in each release of the Buba theme, in plain words. The newest release is at the top.
 
+## 1.2.0
+
+- Bases of the Buba plugin look like Linear's issue lists and boards: group headers and board swimlanes are grey bars, option values are grey chips with a coloured dot, relations are grey chips, board cards have no shadow, value menus are the theme's dark menus.
+- On a computer, the «+ New» lines of bases show only a plus until the pointer is over them.
+- On a phone, a tap on a page in the Buba tree's «Bases and pages» opens the page; only its small arrow folds it.
+
 ## 1.1.3
 
 - On a phone, the bookmark window keeps "Cancel" and "Save" as plain text buttons in its corners, in line with the fields and centred on the title, as in Obsidian; "Delete" is as wide as the fields.
