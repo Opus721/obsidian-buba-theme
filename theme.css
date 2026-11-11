@@ -1403,7 +1403,9 @@ body.theme-dark.buba-theme-tree-round .buba-tree .tree-item-children > .tree-ite
 /* Linear's arrow: a small filled triangle, darker than the name, as light as the name on hover. Obsidian's
    chevron is replaced by the triangle drawn in the icon's color, so Obsidian's turn for a collapsed row and
    Buba's folder-colored arrow (Settings → Buba) apply to it as to the chevron. */
-.theme-dark .buba-tree .tree-item-self > .collapse-icon > svg {
+/* Buba's own fold triangle (`svg.buba-fold-triangle`, Buba 1.4: ДС-63, ADR 0079) is drawn and placed by the plugin:
+   the theme leaves it as it is — a mask of 8 × 8 over its 16 × 16 box shrank it to 6 px (AGE-1763). */
+.theme-dark .buba-tree .tree-item-self > .collapse-icon > svg:not(.buba-fold-triangle) {
   width: 8px;
   height: 8px;
   margin: 0;
@@ -1414,7 +1416,15 @@ body.theme-dark.buba-theme-tree-round .buba-tree .tree-item-children > .tree-ite
     center / 8px 8px no-repeat;
 }
 
-.theme-dark .buba-tree .tree-item-self > .collapse-icon > svg > * {
+/* The theme's arrow cell is centred on the row and already moved with the name (`--buba-tree-text-y`): Buba's
+   triangle stands in its middle, half a pixel down, as the plugin sets it in its own cell — its ink, 0.7 px above the
+   box's middle, then lies on the name's middle line. */
+.theme-dark .buba-tree .tree-item-self > .collapse-icon > svg.buba-fold-triangle {
+  margin-top: 0;
+  translate: 0 0.5px;
+}
+
+.theme-dark .buba-tree .tree-item-self > .collapse-icon > svg:not(.buba-fold-triangle) > * {
   display: none;
 }
 
