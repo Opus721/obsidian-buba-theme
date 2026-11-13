@@ -782,40 +782,121 @@ body.theme-dark.is-phone .modal.mod-bookmark .modal-button-container {
 
 /* ---------- Canvas ---------- */
 
-/* Board: the panel color with faint dots; plain cards and arrows in quiet greys. */
+/* Board: the panel color with faint dots; plain cards and arrows in quiet greys. The six canvas colours are Buba's
+   bright row: the file keeps "color": "1"…"6", only the paint changes. */
 body.theme-dark {
   --canvas-background: var(--lin-panel);
-  --canvas-dot-pattern: #2a2b2f;
+  --canvas-dot-pattern: #222326;
   --canvas-color: #5a5b61;
   --canvas-card-label-color: var(--lin-quiet);
   --canvas-controls-radius: 8px;
+  --canvas-color-1: #ff007e;
+  --canvas-color-2: #ff9c00;
+  --canvas-color-3: #bfd300;
+  --canvas-color-4: #00ff8f;
+  --canvas-color-5: #00deff;
+  --canvas-color-6: #b18cff;
 }
 
-/* Cards are Linear cards: a shade lighter than the board, a faint edge, 8 px corners. */
+/* Cards are Linear cards: a shade lighter than the board, one hairline, 12 px corners, no shadow. */
 .theme-dark .canvas-node-container {
   background-color: var(--lin-card);
-  border-radius: 8px;
+  border-width: 1px;
+  border-radius: 12px;
   box-shadow: none;
 }
 
 .theme-dark .canvas-node:not(.is-themed):not(.is-selected):not(.is-focused) .canvas-node-container {
-  border-color: var(--lin-edge-strong);
+  border-color: var(--lin-edge);
 }
 
-.theme-dark .canvas-node-group .canvas-node-container {
+/* A coloured card: the tone as a 10 % tint and one line in the tone, not two. */
+.theme-dark .canvas-node.is-themed:not(.is-selected):not(.is-focused) .canvas-node-container {
+  border-color: color-mix(in srgb, var(--canvas-color) 70%, transparent);
+  box-shadow: none;
+}
+
+.theme-dark .canvas-node.is-themed:not(.canvas-node-group) .canvas-node-content {
+  background-color: color-mix(in srgb, var(--canvas-color) 10%, transparent);
+}
+
+/* A picture is its own card: no frame around it until it is coloured or selected. */
+.theme-dark
+  .canvas-node:not(.is-themed):not(.is-selected):not(.is-focused)
+  .canvas-node-container:has(> .media-embed) {
+  border-color: transparent;
   background-color: transparent;
 }
 
-/* Group title: a small grey label instead of a big tinted chip; colored groups keep their tint. */
+/* Name above a card: small and quiet. */
+.theme-dark .canvas-node-label {
+  font-size: var(--font-ui-smaller);
+  color: var(--lin-quiet);
+}
+
+/* Group: a quiet area with one hairline and 16 px corners; a coloured group is a 5 % tint with a line in the tone. */
+.theme-dark .canvas-node-group .canvas-node-container {
+  background-color: transparent;
+  border-radius: 16px;
+}
+
+.theme-dark .canvas-node-group:not(.is-themed) .canvas-node-content {
+  background-color: rgba(255, 255, 255, 0.02);
+}
+
+.theme-dark .canvas-node-group.is-themed:not(.is-selected):not(.is-focused) .canvas-node-container {
+  border-color: color-mix(in srgb, var(--canvas-color) 40%, transparent);
+}
+
+.theme-dark .canvas-node-group.is-themed .canvas-node-content {
+  background-color: color-mix(in srgb, var(--canvas-color) 5%, transparent);
+}
+
+/* Group title: a pill, like an option pill in Bases — grey on a faint fill, or the tone on an 18 % tint of it.
+   A dark custom tone is lifted to the brightness of the pink in the row, so its title stays readable. */
 .theme-dark .canvas-group-label {
-  font-size: 1.15em;
+  top: calc(-6px * var(--zoom-multiplier));
+  font-size: 13px;
   font-weight: 500;
+  line-height: 16px;
+  padding: 4px 10px;
+  border-radius: 999px;
   color: var(--lin-grey);
-  border-radius: 6px;
 }
 
 .theme-dark .canvas-node-group:not(.is-themed) .canvas-group-label:not([contenteditable='true']) {
-  background-color: var(--lin-tab);
+  background-color: rgba(255, 255, 255, 0.06);
+}
+
+.theme-dark .canvas-node-group.is-themed .canvas-group-label:not([contenteditable='true']),
+.theme-dark .canvas-node-group.is-themed .canvas-group-label:not([contenteditable='true']).mod-foreground-light,
+.theme-dark .canvas-node-group.is-themed .canvas-group-label:not([contenteditable='true']).mod-foreground-dark {
+  color: var(--canvas-color);
+  color: oklch(from var(--canvas-color) max(l, 0.64) c h);
+  background-color: color-mix(in srgb, var(--canvas-color) 18%, var(--lin-panel));
+}
+
+/* Arrow label: a small pill on the line; a label of two lines or more keeps the same corners, not round ends. */
+.theme-dark .canvas-path-label {
+  font-size: calc(12px * var(--zoom-multiplier));
+  font-weight: 500;
+  line-height: calc(16px * var(--zoom-multiplier));
+  padding: calc(3px * var(--zoom-multiplier)) calc(9px * var(--zoom-multiplier));
+  border-radius: calc(11px * var(--zoom-multiplier));
+  color: var(--lin-grey);
+  background-color: var(--lin-card);
+  box-shadow: 0 0 0 1px var(--lin-edge);
+}
+
+/* While the arrow label is typed in, it keeps Obsidian's ring in the arrow's tone. */
+.theme-dark .canvas-path-label.is-editing {
+  box-shadow: 0 0 0 calc(3px * var(--zoom-multiplier)) var(--canvas-color);
+}
+
+/* Arrow under the pointer or selected: thicker, but not a bar. */
+.theme-dark .canvas-edges g.is-focused path.canvas-display-path,
+.theme-dark .canvas:not(.is-connecting) .canvas-edges g:hover path.canvas-display-path {
+  stroke-width: calc(3.5px * var(--zoom-multiplier));
 }
 
 /* Floating controls on the right, the card bar at the bottom and the selection toolbar (with Advanced Canvas's
